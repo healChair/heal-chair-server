@@ -3,13 +3,14 @@ package kr.healchairserver.domain.dto;
 import static kr.healchairserver.domain.dto.helper.CollectionHelper.convertNCollect;
 import static kr.healchairserver.domain.dto.helper.DtoHelper.noInit;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.function.Function;
 import javax.validation.constraints.NotBlank;
 import kr.healchairserver.domain.model.FastCharger;
 import lombok.Builder;
 import lombok.Data;
 import lombok.With;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.util.Streamable;
 
 public interface FastChargerDto {
@@ -142,8 +143,8 @@ public interface FastChargerDto {
                 .build();
         }
 
-        public static List<Result> of(Streamable<FastCharger> fastChargers) {
-            return convertNCollect(fastChargers, Result::of);
+        public static Page<Result> of(Streamable<FastCharger> fastChargers) {
+            return new PageImpl<>(convertNCollect(fastChargers, Result::of));
         }
     }
 

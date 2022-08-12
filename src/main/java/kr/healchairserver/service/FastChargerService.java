@@ -2,7 +2,6 @@ package kr.healchairserver.service;
 
 import static kr.healchairserver.domain.dto.FastChargerDto.Create;
 import static kr.healchairserver.domain.dto.FastChargerDto.Result;
-import java.util.List;
 import kr.healchairserver.domain.model.FastCharger;
 import kr.healchairserver.repository.FastChargerRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ public class FastChargerService {
         return Result.of(fastChargerRepository.save(fastCharger));
     }
 
-    public List<Result> search(Pageable pageable) {
+    public Page<Result> search(Pageable pageable) {
         Page<FastCharger> fastChargers = fastChargerRepository.findAll(pageable);
         return Result.of(fastChargers);
     }
