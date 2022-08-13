@@ -63,6 +63,25 @@ public interface FastChargerDto {
         public FastCharger asEntity(
             Function<? super FastCharger, ? extends FastCharger> initialize) {
             return initialize.apply(FastCharger.builder()
+                .facility(facility)
+                .siDo(siDo)
+                .siGnGu(siGnGu)
+                .streetNameAddress(streetNameAddress)
+                .lotAddress(lotAddress)
+                .latitude(latitude)
+                .longitude(longitude)
+                .locationDescription(locationDescription)
+                .weekdayStartTime(weekdayStartTime)
+                .weekdayEndTime(weekdayEndTime)
+                .saturdayStartTime(saturdayStartTime)
+                .saturdayEndTime(saturdayEndTime)
+                .holidayStartTime(holidayStartTime)
+                .holidayEndTime(holidayEndTime)
+                .usableNumber(usableNumber)
+                .isAirInjectable(isAirInjectable)
+                .isPhoneRechargeable(isPhoneRechargeable)
+                .managementOrganization(managementOrganization)
+                .managementOrganizationPhone(managementOrganizationPhone)
                 .build());
         }
 
