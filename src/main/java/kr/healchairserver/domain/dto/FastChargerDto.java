@@ -40,23 +40,23 @@ public interface FastChargerDto {
 
         private String locationDescription;
 
-        private LocalDateTime weekdayStartTime;
+        private String weekdayStartTime;
 
-        private LocalDateTime weekdayEndTime;
+        private String weekdayEndTime;
 
-        private LocalDateTime saturdayStartTime;
+        private String saturdayStartTime;
 
-        private LocalDateTime saturdayEndTime;
+        private String saturdayEndTime;
 
-        private LocalDateTime holidayStartTime;
+        private String holidayStartTime;
 
-        private LocalDateTime holidayEndTime;
+        private String holidayEndTime;
 
-        private int usableNumber;
+        private String usableNumber;
 
-        private boolean isAirInjectable;
+        private String isAirInjectable;
 
-        private boolean isPhoneRechargeable;
+        private String isPhoneRechargeable;
 
         private String managementOrganization;
 
@@ -70,18 +70,18 @@ public interface FastChargerDto {
                 .siGnGu(siGnGu)
                 .streetNameAddress(streetNameAddress)
                 .lotAddress(lotAddress)
-                .latitude(latitude)
-                .longitude(longitude)
+                .latitude(Double.parseDouble(latitude))
+                .longitude(Double.parseDouble(longitude))
                 .locationDescription(locationDescription)
-                .weekdayStartTime(weekdayStartTime)
-                .weekdayEndTime(weekdayEndTime)
-                .saturdayStartTime(saturdayStartTime)
-                .saturdayEndTime(saturdayEndTime)
-                .holidayStartTime(holidayStartTime)
-                .holidayEndTime(holidayEndTime)
-                .usableNumber(usableNumber)
-                .isAirInjectable(isAirInjectable)
-                .isPhoneRechargeable(isPhoneRechargeable)
+                .weekdayStartTime(convertToLocalTime(weekdayStartTime))
+                .weekdayEndTime(convertToLocalTime(weekdayEndTime))
+                .saturdayStartTime(convertToLocalTime(saturdayStartTime))
+                .saturdayEndTime(convertToLocalTime(saturdayEndTime))
+                .holidayStartTime(convertToLocalTime(holidayStartTime))
+                .holidayEndTime(convertToLocalTime(holidayEndTime))
+                .usableNumber(Integer.parseInt(usableNumber))
+                .isAirInjectable(convertToBoolean(isAirInjectable))
+                .isPhoneRechargeable(convertToBoolean(isPhoneRechargeable))
                 .managementOrganization(managementOrganization)
                 .managementOrganizationPhone(managementOrganizationPhone)
                 .build());
@@ -89,6 +89,15 @@ public interface FastChargerDto {
 
         public FastCharger asEntity() {
             return asEntity(noInit());
+        }
+
+        private Boolean convertToBoolean(String YOrN) {
+            return YOrN.equals("Y");
+        }
+
+        private LocalTime convertToLocalTime(String date) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            return LocalTime.parse(date, formatter);
         }
     }
 
