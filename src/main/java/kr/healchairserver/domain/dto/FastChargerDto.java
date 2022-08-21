@@ -2,9 +2,11 @@ package kr.healchairserver.domain.dto;
 
 import static kr.healchairserver.domain.dto.helper.CollectionHelper.convertNCollect;
 import static kr.healchairserver.domain.dto.helper.DtoHelper.noInit;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.function.Function;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import kr.healchairserver.domain.model.FastCharger;
 import lombok.Builder;
 import lombok.Data;
@@ -107,31 +109,31 @@ public interface FastChargerDto {
 
         private String lotAddress;
 
-        @NotBlank
-        private String latitude;
+        @NotNull
+        private Double latitude;
 
-        @NotBlank
-        private String longitude;
+        @NotNull
+        private Double longitude;
 
         private String locationDescription;
 
-        private LocalDateTime weekdayStartTime;
+        private LocalTime weekdayStartTime;
 
-        private LocalDateTime weekdayEndTime;
+        private LocalTime weekdayEndTime;
 
-        private LocalDateTime saturdayStartTime;
+        private LocalTime saturdayStartTime;
 
-        private LocalDateTime saturdayEndTime;
+        private LocalTime saturdayEndTime;
 
-        private LocalDateTime holidayStartTime;
+        private LocalTime holidayStartTime;
 
-        private LocalDateTime holidayEndTime;
+        private LocalTime holidayEndTime;
 
-        private int usableNumber;
+        private Integer usableNumber;
 
-        private boolean isAirInjectable;
+        private Boolean isAirInjectable;
 
-        private boolean isPhoneRechargeable;
+        private Boolean isPhoneRechargeable;
 
         private String managementOrganization;
 
@@ -155,8 +157,8 @@ public interface FastChargerDto {
                 .holidayStartTime(fastCharger.getHolidayStartTime())
                 .holidayEndTime(fastCharger.getHolidayEndTime())
                 .usableNumber(fastCharger.getUsableNumber())
-                .isAirInjectable(fastCharger.isAirInjectable())
-                .isPhoneRechargeable(fastCharger.isPhoneRechargeable())
+                .isAirInjectable(fastCharger.getIsAirInjectable())
+                .isPhoneRechargeable(fastCharger.getIsPhoneRechargeable())
                 .managementOrganization(fastCharger.getManagementOrganization())
                 .managementOrganizationPhone(fastCharger.getManagementOrganizationPhone())
                 .build();
