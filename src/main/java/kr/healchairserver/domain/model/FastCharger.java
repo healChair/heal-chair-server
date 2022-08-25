@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,10 +35,8 @@ public class FastCharger extends TimeEntity {
 
     private String lotAddress;
 
-    @NotNull
     private Double latitude;
 
-    @NotNull
     private Double longitude;
 
     private String locationDescription;

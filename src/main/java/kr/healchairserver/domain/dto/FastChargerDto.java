@@ -4,10 +4,11 @@ import static kr.healchairserver.domain.dto.helper.CollectionHelper.convertNColl
 import static kr.healchairserver.domain.dto.helper.DtoHelper.noInit;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.primitives.Doubles;
+import com.google.common.primitives.Ints;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Function;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import kr.healchairserver.domain.model.FastCharger;
 import lombok.AccessLevel;
@@ -45,11 +46,9 @@ public interface FastChargerDto {
         @JsonProperty("lnmadr")
         private String lotAddress;
 
-        @NotBlank
         @JsonProperty("latitude")
         private String latitude;
 
-        @NotBlank
         @JsonProperty("longitude")
         private String longitude;
 
@@ -96,8 +95,8 @@ public interface FastChargerDto {
                 .siGnGu(siGnGu)
                 .streetNameAddress(streetNameAddress)
                 .lotAddress(lotAddress)
-                .latitude(Double.parseDouble(latitude))
-                .longitude(Double.parseDouble(longitude))
+                .latitude(Doubles.tryParse(latitude))
+                .longitude(Doubles.tryParse(longitude))
                 .locationDescription(locationDescription)
                 .weekdayStartTime(convertToLocalTime(weekdayStartTime))
                 .weekdayEndTime(convertToLocalTime(weekdayEndTime))
@@ -105,7 +104,7 @@ public interface FastChargerDto {
                 .saturdayEndTime(convertToLocalTime(saturdayEndTime))
                 .holidayStartTime(convertToLocalTime(holidayStartTime))
                 .holidayEndTime(convertToLocalTime(holidayEndTime))
-                .usableNumber(Integer.parseInt(usableNumber))
+                .usableNumber(Ints.tryParse(usableNumber))
                 .isAirInjectable(convertToBoolean(isAirInjectable))
                 .isPhoneRechargeable(convertToBoolean(isPhoneRechargeable))
                 .managementOrganization(managementOrganization)
