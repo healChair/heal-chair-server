@@ -1,11 +1,10 @@
 package kr.healchairserver.domain.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,31 +35,29 @@ public class FastCharger extends TimeEntity {
 
     private String lotAddress;
 
-    @NotBlank
-    private String latitude;
+    private Double latitude;
 
-    @NotBlank
-    private String longitude;
+    private Double longitude;
 
     private String locationDescription;
 
-    private LocalDateTime weekdayStartTime;
+    private LocalTime weekdayStartTime;
 
-    private LocalDateTime weekdayEndTime;
+    private LocalTime weekdayEndTime;
 
-    private LocalDateTime saturdayStartTime;
+    private LocalTime saturdayStartTime;
 
-    private LocalDateTime saturdayEndTime;
+    private LocalTime saturdayEndTime;
 
-    private LocalDateTime holidayStartTime;
+    private LocalTime holidayStartTime;
 
-    private LocalDateTime holidayEndTime;
+    private LocalTime holidayEndTime;
 
-    private int usableNumber;
+    private Integer usableNumber;
 
-    private boolean isAirInjectable;
+    private Boolean isAirInjectable;
 
-    private boolean isPhoneRechargeable;
+    private Boolean isPhoneRechargeable;
 
     private String managementOrganization;
 
@@ -68,11 +65,11 @@ public class FastCharger extends TimeEntity {
 
     @Builder
     private FastCharger(String facility, String siDo, String siGnGu, String streetNameAddress,
-        String lotAddress, String latitude, String longitude, String locationDescription,
-        LocalDateTime weekdayStartTime, LocalDateTime weekdayEndTime,
-        LocalDateTime saturdayStartTime,
-        LocalDateTime saturdayEndTime, LocalDateTime holidayStartTime, LocalDateTime holidayEndTime,
-        int usableNumber, boolean isAirInjectable, boolean isPhoneRechargeable,
+        String lotAddress, Double latitude, Double longitude, String locationDescription,
+        LocalTime weekdayStartTime, LocalTime weekdayEndTime,
+        LocalTime saturdayStartTime,
+        LocalTime saturdayEndTime, LocalTime holidayStartTime, LocalTime holidayEndTime,
+        Integer usableNumber, Boolean isAirInjectable, Boolean isPhoneRechargeable,
         String managementOrganization, String managementOrganizationPhone) {
         this.facility = facility;
         this.siDo = siDo;

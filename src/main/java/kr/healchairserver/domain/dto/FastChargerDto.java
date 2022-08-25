@@ -2,12 +2,20 @@ package kr.healchairserver.domain.dto;
 
 import static kr.healchairserver.domain.dto.helper.CollectionHelper.convertNCollect;
 import static kr.healchairserver.domain.dto.helper.DtoHelper.noInit;
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.primitives.Doubles;
+import com.google.common.primitives.Ints;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.function.Function;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import kr.healchairserver.domain.model.FastCharger;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.With;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,48 +26,67 @@ public interface FastChargerDto {
     @With
     @Data
     @Builder
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
     class Create {
 
+        @JsonProperty("fcltyNm")
         private String facility;
 
+        @JsonProperty("ctprvnNm")
         private String siDo;
 
+        @JsonProperty("signguNm")
         private String siGnGu;
 
+        @JsonProperty("rdnmadr")
         private String streetNameAddress;
 
+        @JsonProperty("lnmadr")
         private String lotAddress;
 
-        @NotBlank
+        @JsonProperty("latitude")
         private String latitude;
 
-        @NotBlank
+        @JsonProperty("longitude")
         private String longitude;
 
+        @JsonProperty("instlLcDesc")
         private String locationDescription;
 
-        private LocalDateTime weekdayStartTime;
+        @JsonProperty("weekdayOperOpenHhmm")
+        private String weekdayStartTime;
 
-        private LocalDateTime weekdayEndTime;
+        @JsonProperty("weekdayOperColseHhmm")
+        private String weekdayEndTime;
 
-        private LocalDateTime saturdayStartTime;
+        @JsonProperty("satOperOperOpenHhmm")
+        private String saturdayStartTime;
 
-        private LocalDateTime saturdayEndTime;
+        @JsonProperty("satOperCloseHhmm")
+        private String saturdayEndTime;
 
-        private LocalDateTime holidayStartTime;
+        @JsonProperty("holidayOperOpenHhmm")
+        private String holidayStartTime;
 
-        private LocalDateTime holidayEndTime;
+        @JsonProperty("holidayCloseOpenHhmm")
+        private String holidayEndTime;
 
-        private int usableNumber;
+        @JsonProperty("smtmUseCo")
+        private String usableNumber;
 
-        private boolean isAirInjectable;
+        @JsonProperty("airInjectorYn")
+        private String isAirInjectable;
 
-        private boolean isPhoneRechargeable;
+        @JsonProperty("moblphonChrstnYn")
+        private String isPhoneRechargeable;
 
+        @JsonProperty("institutionNm")
         private String managementOrganization;
 
+        @JsonProperty("institutionPhoneNumber")
         private String managementOrganizationPhone;
-
         public FastCharger asEntity(
             Function<? super FastCharger, ? extends FastCharger> initialize) {
             return initialize.apply(FastCharger.builder()
@@ -68,18 +95,18 @@ public interface FastChargerDto {
                 .siGnGu(siGnGu)
                 .streetNameAddress(streetNameAddress)
                 .lotAddress(lotAddress)
-                .latitude(latitude)
-                .longitude(longitude)
+                .latitude(Doubles.tryParse(latitude))
+                .longitude(Doubles.tryParse(longitude))
                 .locationDescription(locationDescription)
-                .weekdayStartTime(weekdayStartTime)
-                .weekdayEndTime(weekdayEndTime)
-                .saturdayStartTime(saturdayStartTime)
-                .saturdayEndTime(saturdayEndTime)
-                .holidayStartTime(holidayStartTime)
-                .holidayEndTime(holidayEndTime)
-                .usableNumber(usableNumber)
-                .isAirInjectable(isAirInjectable)
-                .isPhoneRechargeable(isPhoneRechargeable)
+                .weekdayStartTime(convertToLocalTime(weekdayStartTime))
+                .weekdayEndTime(convertToLocalTime(weekdayEndTime))
+                .saturdayStartTime(convertToLocalTime(saturdayStartTime))
+                .saturdayEndTime(convertToLocalTime(saturdayEndTime))
+                .holidayStartTime(convertToLocalTime(holidayStartTime))
+                .holidayEndTime(convertToLocalTime(holidayEndTime))
+                .usableNumber(Ints.tryParse(usableNumber))
+                .isAirInjectable(convertToBoolean(isAirInjectable))
+                .isPhoneRechargeable(convertToBoolean(isPhoneRechargeable))
                 .managementOrganization(managementOrganization)
                 .managementOrganizationPhone(managementOrganizationPhone)
                 .build());
@@ -87,6 +114,15 @@ public interface FastChargerDto {
 
         public FastCharger asEntity() {
             return asEntity(noInit());
+        }
+
+        private Boolean convertToBoolean(String YOrN) {
+            return YOrN.equals("Y");
+        }
+
+        private LocalTime convertToLocalTime(String date) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm");
+            return LocalTime.parse(date, formatter);
         }
     }
 
@@ -107,31 +143,31 @@ public interface FastChargerDto {
 
         private String lotAddress;
 
-        @NotBlank
-        private String latitude;
+        @NotNull
+        private Double latitude;
 
-        @NotBlank
-        private String longitude;
+        @NotNull
+        private Double longitude;
 
         private String locationDescription;
 
-        private LocalDateTime weekdayStartTime;
+        private LocalTime weekdayStartTime;
 
-        private LocalDateTime weekdayEndTime;
+        private LocalTime weekdayEndTime;
 
-        private LocalDateTime saturdayStartTime;
+        private LocalTime saturdayStartTime;
 
-        private LocalDateTime saturdayEndTime;
+        private LocalTime saturdayEndTime;
 
-        private LocalDateTime holidayStartTime;
+        private LocalTime holidayStartTime;
 
-        private LocalDateTime holidayEndTime;
+        private LocalTime holidayEndTime;
 
-        private int usableNumber;
+        private Integer usableNumber;
 
-        private boolean isAirInjectable;
+        private Boolean isAirInjectable;
 
-        private boolean isPhoneRechargeable;
+        private Boolean isPhoneRechargeable;
 
         private String managementOrganization;
 
@@ -155,8 +191,8 @@ public interface FastChargerDto {
                 .holidayStartTime(fastCharger.getHolidayStartTime())
                 .holidayEndTime(fastCharger.getHolidayEndTime())
                 .usableNumber(fastCharger.getUsableNumber())
-                .isAirInjectable(fastCharger.isAirInjectable())
-                .isPhoneRechargeable(fastCharger.isPhoneRechargeable())
+                .isAirInjectable(fastCharger.getIsAirInjectable())
+                .isPhoneRechargeable(fastCharger.getIsPhoneRechargeable())
                 .managementOrganization(fastCharger.getManagementOrganization())
                 .managementOrganizationPhone(fastCharger.getManagementOrganizationPhone())
                 .build();
