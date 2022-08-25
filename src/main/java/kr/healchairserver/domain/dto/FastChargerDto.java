@@ -122,7 +122,7 @@ public interface FastChargerDto {
         }
 
         private LocalTime convertToLocalTime(String date) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm");
             return LocalTime.parse(date, formatter);
         }
     }
