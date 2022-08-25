@@ -2,14 +2,19 @@ package kr.healchairserver.domain.dto;
 
 import static kr.healchairserver.domain.dto.helper.CollectionHelper.convertNCollect;
 import static kr.healchairserver.domain.dto.helper.DtoHelper.noInit;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Function;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import kr.healchairserver.domain.model.FastCharger;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.With;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,48 +25,69 @@ public interface FastChargerDto {
     @With
     @Data
     @Builder
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
     class Create {
 
+        @JsonProperty("fcltyNm")
         private String facility;
 
+        @JsonProperty("ctprvnNm")
         private String siDo;
 
+        @JsonProperty("signguNm")
         private String siGnGu;
 
+        @JsonProperty("rdnmadr")
         private String streetNameAddress;
 
+        @JsonProperty("lnmadr")
         private String lotAddress;
 
         @NotBlank
+        @JsonProperty("latitude")
         private String latitude;
 
         @NotBlank
+        @JsonProperty("longitude")
         private String longitude;
 
+        @JsonProperty("instlLcDesc")
         private String locationDescription;
 
+        @JsonProperty("weekdayOperOpenHhmm")
         private String weekdayStartTime;
 
+        @JsonProperty("weekdayOperColseHhmm")
         private String weekdayEndTime;
 
+        @JsonProperty("satOperOperOpenHhmm")
         private String saturdayStartTime;
 
+        @JsonProperty("satOperCloseHhmm")
         private String saturdayEndTime;
 
+        @JsonProperty("holidayOperOpenHhmm")
         private String holidayStartTime;
 
+        @JsonProperty("holidayCloseOpenHhmm")
         private String holidayEndTime;
 
+        @JsonProperty("smtmUseCo")
         private String usableNumber;
 
+        @JsonProperty("airInjectorYn")
         private String isAirInjectable;
 
+        @JsonProperty("moblphonChrstnYn")
         private String isPhoneRechargeable;
 
+        @JsonProperty("institutionNm")
         private String managementOrganization;
 
+        @JsonProperty("institutionPhoneNumber")
         private String managementOrganizationPhone;
-
         public FastCharger asEntity(
             Function<? super FastCharger, ? extends FastCharger> initialize) {
             return initialize.apply(FastCharger.builder()
